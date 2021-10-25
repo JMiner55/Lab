@@ -11,8 +11,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-import TicTacToe.Move;
-
 public class Tone
 {
 	// Mary had a little lamb
