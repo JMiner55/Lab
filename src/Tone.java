@@ -13,11 +13,10 @@ import javax.sound.sampled.SourceDataLine;
 
 public class Tone
 {
-	// Mary had a little lamb
-	private static List<BellNote> song = new ArrayList<BellNote>();
+	private static List<BellNote> loadSong(String filename)
 	{
-		final List<BellNote> bellNote = new ArrayList<>();
-		String filename;
+		filename = "ToneFile.txt";
+		final List<BellNote> song = new ArrayList<>();
 		final File file = new File(filename);
 		if (file.exists())
 		{
@@ -26,26 +25,63 @@ public class Tone
 				String line = null;
 				while ((line = br.readLine()) != null)
 				{
-					final BellNote b = playNote(line, b);
-					if (b != null)
-					{
-						bellNote.add(b);
-					}
-					else
-					{
-						System.err.println("Error: Invalid move '" + line + "'");
-					}
+				
 				}
 			}
-			catch (IOException ignored)
+			catch (FileNotFoundException e)
 			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
-		else
-		{
-			System.err.println("File '" + filename + "' not found");
-		}
+		
+		return song;
 	}
+	
+	// Mary had a little lamb
+	private static final List<BellNote> song = new ArrayList<BellNote>()
+	{
+		{
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//			add(new BellNote(Note.F4, NoteLength.QUARTER));
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.A5, NoteLength.HALF));
+//
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//			add(new BellNote(Note.G4, NoteLength.HALF));
+//
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.A5, NoteLength.HALF));
+//
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//			add(new BellNote(Note.F4, NoteLength.QUARTER));
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//			add(new BellNote(Note.A5, NoteLength.QUARTER));
+//			add(new BellNote(Note.G4, NoteLength.QUARTER));
+//
+//			add(new BellNote(Note.F4, NoteLength.WHOLE));
+		}
+	};
 
 	public static void main(String[] args) throws Exception
 	{
