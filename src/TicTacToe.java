@@ -1,11 +1,11 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 public class TicTacToe
@@ -33,10 +33,16 @@ public class TicTacToe
 		}
 	}
 
-	private class Move
+	private static class Move
 	{
-		Symbol symbol;
-		int location;
+		final Symbol symbol;
+		final int location;
+
+		Move(Symbol symbol, int location)
+		{
+			this.symbol = symbol;
+			this.location = location;
+		}
 	}
 
 	public static void main(String[] args)
@@ -71,28 +77,35 @@ public class TicTacToe
 
 	private static List<Move> loadMoves(String filename)
 	{
-
-		ArrayList<String> moves = new ArrayList<>();
-
-		try (BufferedReader br = new BufferedReader(new FileReader("Moves.txt")))
+		final List<Move> moves = new ArrayList<>();
+		final File file = new File(filename);
+		if (file.exists())
 		{
-			while (br.ready())
+			try (FileReader fileReader = new FileReader(file); BufferedReader br = new BufferedReader(fileReader))
 			{
-				moves.add(br.readLine());
+				String line = null;
+				while ((line = br.readLine()) != null)
+				{
+					final Move m = parseMove(line);
+					if (m != null)
+					{
+						moves.add(m);
+					}
+					else
+					{
+						System.err.println("Error: Invalid move '" + line + "'");
+					}
+				}
+			}
+			catch (IOException ignored)
+			{
 			}
 		}
-		catch (FileNotFoundException e)
+		else
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("File '" + filename + "' not found");
 		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
+		return moves;
 	}
 
 	private static int parseInt(String num)
@@ -105,6 +118,16 @@ public class TicTacToe
 		{
 		}
 		return 0;
+	}
+
+	private static Move parseMove(String line)
+	{
+		final String[] fields = line.split("\\s+");
+		if (fields.length == 2)
+		{
+			return new Move(parseSymbol(fields[0]), parseInt(fields[1]));
+		}
+		return null;
 	}
 
 	private static Symbol parseSymbol(String symbol)
@@ -158,7 +181,8 @@ public class TicTacToe
 		// Continue validation on number of moves
 		if (moves.size() != numSquares)
 		{
-			System.err.println("Error: Number of moves does not match number of squares");
+			System.err.println("Error: Number of moves (" + moves.size() + ") does not match number of squares ("
+					+ numSquares + ")");
 			success = false;
 		}
 
@@ -167,6 +191,11 @@ public class TicTacToe
 		Symbol nextMove = first;
 		for (Move m : moves)
 		{
+			if (m.location < 1 || m.location > numSquares)
+			{
+				System.err.println("Error: Invalid location '" + m.location + "'");
+				success = false;
+			}
 			if (m.symbol == Symbol.INVALID)
 			{
 				System.err.println("Error: At least one of the moves has an invalid Symbol");
