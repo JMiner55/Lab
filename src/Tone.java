@@ -13,19 +13,33 @@ import javax.sound.sampled.SourceDataLine;
 
 public class Tone
 {
-	private static List<BellNote> loadSong(String filename)
+	private static List<BellNote> loadSong()
 	{
-		filename = "ToneFile.txt";
 		final List<BellNote> song = new ArrayList<>();
-		final File file = new File(filename);
+		final File file = new File("ToneFile.txt");
 		if (file.exists())
 		{
 			try (FileReader fileReader = new FileReader(file); BufferedReader br = new BufferedReader(fileReader))
 			{
-				String line = null;
-				while ((line = br.readLine()) != null)
+				String line;
+				NoteLength nl;
+				Note n;
+
+				while ((n = Note.valueOf(line = br.readLine())) != null)
 				{
-				
+					while ((nl = NoteLength.valueOf(line = br.readLine())) != null)
+					{
+						if (song != null)
+						{
+							song.add(n, nl);
+						}
+						else
+						{
+							System.err.println("Error: Invalid song '" + line + "'");
+						}
+
+					}
+
 				}
 			}
 			catch (FileNotFoundException e)
@@ -39,14 +53,13 @@ public class Tone
 				e.printStackTrace();
 			}
 		}
-		
 		return song;
 	}
-	
+
 	// Mary had a little lamb
-	private static final List<BellNote> song = new ArrayList<BellNote>()
-	{
-		{
+//	private static final List<BellNote> song = new ArrayList<BellNote>()
+//	{
+//		{
 //			add(new BellNote(Note.A5, NoteLength.QUARTER));
 //			add(new BellNote(Note.G4, NoteLength.QUARTER));
 //			add(new BellNote(Note.F4, NoteLength.QUARTER));
@@ -80,14 +93,14 @@ public class Tone
 //			add(new BellNote(Note.G4, NoteLength.QUARTER));
 //
 //			add(new BellNote(Note.F4, NoteLength.WHOLE));
-		}
-	};
+//		}
+//	};
 
 	public static void main(String[] args) throws Exception
 	{
 		final AudioFormat af = new AudioFormat(Note.SAMPLE_RATE, 8, 1, true, false);
 		Tone t = new Tone(af);
-		t.playSong(song);
+		t.playSong(loadSong());
 	}
 
 	private final AudioFormat af;
