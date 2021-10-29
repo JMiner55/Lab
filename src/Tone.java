@@ -16,14 +16,14 @@ public class Tone
 	private static List<BellNote> loadSong()
 	{
 		final List<BellNote> song = new ArrayList<>();
-		final File file = new File("ToneFile.txt");
+		final File file = new File("blank.txt");
 		if (file.exists())
 		{
 			try (FileReader fileReader = new FileReader(file); BufferedReader br = new BufferedReader(fileReader))
 			{
 				String line;
 				NoteLength nl = null;
-				
+
 				while ((line = br.readLine()) != null)
 				{
 					final String[] fields = line.split(" ");
@@ -46,17 +46,17 @@ public class Tone
 						{
 							nl = NoteLength.QUARTER;
 						}
-						
-						else 
+						else
 						{
 							System.err.print("Invalid NoteLength");
-						
-						}		
-						BellNote bn = new BellNote(Note.valueOf(fields[0]), nl );
+						}
+						BellNote bn = new BellNote(Note.valueOf(fields[0]), nl);
 						song.add(bn);
 					}
 				}
+				System.err.println("Error: Invalid File. File is Blank.");
 			}
+
 			catch (FileNotFoundException e)
 			{
 				System.err.println("File not Found!!");
@@ -64,9 +64,9 @@ public class Tone
 			}
 			catch (IOException e)
 			{
-				System.err.println("IOException: File Doesn't exsit!" );
+				System.err.println("IOException: File Doesn't exsit!");
 				e.printStackTrace();
-			}	
+			}
 		}
 		else
 		{
@@ -82,7 +82,6 @@ public class Tone
 		Tone t = new Tone(af);
 
 		t.playSong(loadSong());
-
 	}
 
 	private final AudioFormat af;
@@ -143,7 +142,6 @@ enum NoteLength
 	{
 		return timeMs;
 	}
-	
 }
 
 enum Note
