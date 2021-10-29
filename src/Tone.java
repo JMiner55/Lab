@@ -21,39 +21,34 @@ public class Tone
 		{
 			try (FileReader fileReader = new FileReader(file); BufferedReader br = new BufferedReader(fileReader))
 			{
-				System.err.println("file and bufferedreader loaded");
 				String line;
-				NoteLength nl;
+				NoteLength nl = null;
 				
 				while ((line = br.readLine()) != null)
 				{
-					System.out.println("buffered reader reading line");
-
 					final String[] fields = line.split(" ");
 
 					if (fields != null)
 					{
-						if (fields.equals("1"))
+						if (fields[1].equals("1"))
 						{
-							return NoteLength.WHOLE;
+							nl = NoteLength.WHOLE;
 						}
-						
-						
-						
-						
-						System.out.println("string split and fields array created");
-
-						BellNote bn = new BellNote(Note.valueOf(fields[0]), NoteLength.valueOf(fields[1]));
-
-						System.out.println("bellnote created and chagned from string to enum");
-
+						if (fields[1].equals("2"))
+						{
+							nl = NoteLength.HALF;
+						}
+						if (fields[1].equals("3"))
+						{
+							nl = NoteLength.EIGTH;
+						}
+						if (fields[1].equals("4"))
+						{
+							nl = NoteLength.QUARTER;
+						}
+								
+						BellNote bn = new BellNote(Note.valueOf(fields[0]), nl );
 						song.add(bn);
-
-						System.out.println("bn added to song list");
-					}
-					else
-					{
-						System.err.println("Error: Invalid song '" + line + "'");
 					}
 				}
 			}
@@ -78,8 +73,7 @@ public class Tone
 		Tone t = new Tone(af);
 
 		t.playSong(loadSong());
-		
-		System.out.println("playSong(loadSong())");
+
 	}
 
 	private final AudioFormat af;
