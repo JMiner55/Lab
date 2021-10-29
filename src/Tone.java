@@ -29,7 +29,9 @@ public class Tone
 				{
 					while ((nl = NoteLength.valueOf(line = br.readLine())) != null)
 					{
-						song.add();
+						BellNote bn = new BellNote(n, nl);
+						
+						song.add(bn);
 					}
 				}
 			}
@@ -46,46 +48,6 @@ public class Tone
 		}
 		return song;
 	}
-
-	// Mary had a little lamb
-//	private static final List<BellNote> song = new ArrayList<BellNote>()
-//	{
-//		{
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//			add(new BellNote(Note.F4, NoteLength.QUARTER));
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.A5, NoteLength.HALF));
-//
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//			add(new BellNote(Note.G4, NoteLength.HALF));
-//
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.A5, NoteLength.HALF));
-//
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//			add(new BellNote(Note.F4, NoteLength.QUARTER));
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//			add(new BellNote(Note.A5, NoteLength.QUARTER));
-//			add(new BellNote(Note.G4, NoteLength.QUARTER));
-//
-//			add(new BellNote(Note.F4, NoteLength.WHOLE));
-//		}
-//	};
 
 	public static void main(String[] args) throws Exception
 	{
