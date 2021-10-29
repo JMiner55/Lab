@@ -29,17 +29,8 @@ public class Tone
 				{
 					while ((nl = NoteLength.valueOf(line = br.readLine())) != null)
 					{
-						if (song != null)
-						{
-							song.add(n, nl);
-						}
-						else
-						{
-							System.err.println("Error: Invalid song '" + line + "'");
-						}
-
+						song.add();
 					}
-
 				}
 			}
 			catch (FileNotFoundException e)
