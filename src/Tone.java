@@ -34,19 +34,24 @@ public class Tone
 						{
 							nl = NoteLength.WHOLE;
 						}
-						if (fields[1].equals("2"))
+						else if (fields[1].equals("2"))
 						{
 							nl = NoteLength.HALF;
 						}
-						if (fields[1].equals("3"))
+						else if (fields[1].equals("3"))
 						{
 							nl = NoteLength.EIGTH;
 						}
-						if (fields[1].equals("4"))
+						else if (fields[1].equals("4"))
 						{
 							nl = NoteLength.QUARTER;
 						}
-								
+						
+						else 
+						{
+							System.err.print("Invalid NoteLength");
+						
+						}		
 						BellNote bn = new BellNote(Note.valueOf(fields[0]), nl );
 						song.add(bn);
 					}
@@ -54,14 +59,18 @@ public class Tone
 			}
 			catch (FileNotFoundException e)
 			{
-				// TODO Auto-generated catch block
+				System.err.println("File not Found!!");
 				e.printStackTrace();
 			}
 			catch (IOException e)
 			{
-				// TODO Auto-generated catch block
+				System.err.println("IOException: File Doesn't exsit!" );
 				e.printStackTrace();
-			}
+			}	
+		}
+		else
+		{
+			System.err.println("Error: File Not Found!");
 		}
 		return song;
 	}
